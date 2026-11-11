@@ -1,0 +1,10 @@
+# [KAMAL] Write at least 20 questions here (24 recommended). See PLAN.md Task 9 for the mix.
+# Each entry:
+# - id: q01
+#   question: "..."
+#   answerable: true
+#   category: table_number
+#   gold: [{paper: attention, section: "6.1", label: "Table 2"}]
+#   must_include: [["28.4"]]          # every group must match; alternatives inside a group
+#   note: "why a naive system gets this wrong"
+[]
