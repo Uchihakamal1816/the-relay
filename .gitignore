@@ -1,0 +1,8 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+data/papers/
+data/corpus/
+.claude/
+.pytest_cache/
