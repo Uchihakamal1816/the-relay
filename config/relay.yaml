@@ -1,0 +1,35 @@
+models:
+  primary:  {id: openai/gpt-oss-120b, reasoning_effort: low,  price_in: 0.15,  price_out: 0.60}
+  fallback: {id: openai/gpt-oss-20b,  reasoning_effort: low,  price_in: 0.075, price_out: 0.30}
+  sacrificial: {id: qwen/qwen3.8-27b, reasoning_effort: none}
+endpoints:
+  real: https://api.groq.com/openai/v1
+  standin: http://127.0.0.1:8900/openai/v1
+limits_prior: {rpm: 30, tpm: 8000, rpd: 1000, tpd: 200000}   # docs 2026-11-11; headers overwrite
+governor: {safety: 0.9}
+slo:                         # KAMAL
+  patience_first_s: 6.0
+  patience_total_s: 20.0
+  first_line_p95_ms: 2500
+ladder:                      # KAMAL
+  wait_full_s: 1.0
+  wait_lean_s: 3.0
+  daily_lean_below: 0.25
+  daily_stop_below: 0.02
+retrieval:
+  settings:
+    S1: {chunk_tokens: 400, k: 6, rerank: false}
+    S2: {chunk_tokens: 200, k: 6, rerank: false}
+    S3: {chunk_tokens: 200, k: 4, rerank: true, candidates: 20}
+    S4: {chunk_tokens: 200, k: 2, rerank: true, candidates: 20}
+  default: S3                # KAMAL, after Task 9
+  lean: S4
+  refuse_below: null         # set in Task 9
+  tool_timeout_s: 1.5
+understand: {timeout_s: 0.8, max_completion_tokens: 200}
+draft: {max_completion_tokens: 400, lean_max_completion_tokens: 250, ttft_timeout_s: 4.0, total_timeout_s: 12.0, max_redrafts: 1}
+retry: {policy: budgeted, max_attempts: 2, base_s: 0.25, cap_s: 2.0, budget_ratio: 0.1}
+cache: {enabled: true, ttl_s: 600}
+papermap: {enabled: true, max_hits: 2}
+capacity: {tokens_per_answer_full: 1700}   # replace with the Task 9 measurement
+seed: 7
