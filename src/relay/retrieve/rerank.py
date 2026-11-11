@@ -12,4 +12,5 @@ def _enc():
 
 class Reranker:
     def score(self, query: str, texts: list[str]) -> list[float]:
-        return [float(x) for x in _enc().rerank(query, texts)]
+        # batch_size=1: batched ONNX pads every pair to the longest; measured 1131 ms -> 326 ms for 20 pairs
+        return [float(x) for x in _enc().rerank(query, texts, batch_size=1)]

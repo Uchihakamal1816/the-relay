@@ -122,3 +122,20 @@ def test_budget_stops_retries():
 def test_naive_retries_429():
     p = pol(policy="naive")
     assert p.decide(E("rate_limited_minute", 5), 0, False) == 0.0 and p.decide(E("server"), 3, False) is None
+
+
+def test_wait_counts_queue_ahead():
+    c = Clock(); g = mg(c)
+    assert g.wait_s(4000) == 0
+    g.queue_len, g.queued_tokens = 1, 8000  # someone ahead holds a full minute of tokens
+    assert g.wait_s(4000) == pytest.approx(30, rel=0.01)
+
+
+def test_lock_wait_bounded_by_deadline():
+    g = ModelGovernor("m", L, safety=1.0)
+    async def main():
+        await g._lock.acquire()
+        with pytest.raises(WouldMissDeadline):
+            await g.acquire(10, g.clock() + 0.05)
+        assert g.queue_len == 0 and g.queued_tokens == 0
+    asyncio.run(main())

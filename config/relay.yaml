@@ -26,6 +26,7 @@ retrieval:
   lean: S4
   refuse_below: null         # set in Task 9
   tool_timeout_s: 1.5
+  max_concurrent_rerank: 4   # beyond this, skip re-rank (CPU is a limit too)
 understand: {timeout_s: 0.8, max_completion_tokens: 200}
 draft: {max_completion_tokens: 400, lean_max_completion_tokens: 250, ttft_timeout_s: 4.0, total_timeout_s: 12.0, max_redrafts: 1}
 retry: {policy: budgeted, max_attempts: 2, base_s: 0.25, cap_s: 2.0, budget_ratio: 0.1, min_per_min: 3}

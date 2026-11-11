@@ -69,6 +69,7 @@ class ModelGovernor:
         self.day_reset_at: float | None = None
         self.queue_len = 0
         self.peak_queue = 0
+        self.queued_tokens = 0   # reservations of requests waiting ahead in the FIFO
         self._lock = asyncio.Lock()
 
     def _daily_short(self, tokens, now) -> float | None:
@@ -83,7 +84,11 @@ class ModelGovernor:
         now = self.clock()
         if self._daily_short(tokens, now) is not None:
             return math.inf
-        t = max(self.rpm.available_at(1, now), self.tpm.available_at(tokens, now), self.blocked_until)
+        ahead_r, ahead_t = self.queue_len, self.queued_tokens   # FIFO: everyone ahead is served first
+        t = max(self.rpm.available_at(min(self.rpm.capacity, 1 + ahead_r), now),
+                self.tpm.available_at(min(self.tpm.capacity, tokens + ahead_t), now), self.blocked_until)
+        if tokens + ahead_t > self.tpm.capacity:  # more than one bucket's worth queued: add whole refill periods
+            t = max(t, now + (tokens + ahead_t - self.tpm.level) / self.tpm.refill)
         return max(0.0, t - now)
 
     def daily_frac_left(self) -> float:
@@ -98,9 +103,24 @@ class ModelGovernor:
         return r if r is not None else 0.0
 
     async def acquire(self, tokens: int, deadline: float) -> Grant:
-        self.queue_len += 1; self.peak_queue = max(self.peak_queue, self.queue_len)
+        now = self.clock()
+        short = self._daily_short(tokens, now)
+        if short is not None:
+            raise DailyExhausted(short)
+        w = self.wait_s(tokens)
+        if now + w > deadline:
+            raise WouldMissDeadline(w)  # refuse at the door, before joining the queue
+        self.queue_len += 1; self.queued_tokens += tokens
+        self.peak_queue = max(self.peak_queue, self.queue_len)
+        queued = True
         try:
-            async with self._lock:
+            timeout = None if deadline == math.inf else max(0.0, deadline - self.clock())
+            try:
+                await asyncio.wait_for(self._lock.acquire(), timeout)
+            except asyncio.TimeoutError:
+                raise WouldMissDeadline(deadline - now)
+            try:
+                self.queue_len -= 1; self.queued_tokens -= tokens; queued = False
                 while True:
                     now = self.clock()
                     short = self._daily_short(tokens, now)
@@ -115,8 +135,11 @@ class ModelGovernor:
                 for b, a in ((self.rpm, 1), (self.rpd, 1), (self.tpm, tokens), (self.tpd, tokens)):
                     b.take(a, now)
                 return Grant(self.model, tokens, now)
+            finally:
+                self._lock.release()
         finally:
-            self.queue_len -= 1
+            if queued:
+                self.queue_len -= 1; self.queued_tokens -= tokens
 
     def _refund_tokens(self, n):
         now = self.clock()

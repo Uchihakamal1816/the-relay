@@ -84,8 +84,12 @@ async def run_scenario(name: str, real: bool, cfg_path="config/relay.yaml"):
                                                cache_key=f"{a.qid}#{a.variant}", trace_tags={"qid": a.qid, "scenario": name},
                                                on_event=lambda e: e.kind in ("sentence", "notice") and got_first.set()))
         start_iso = (wall0 + timedelta(seconds=a.t_s)).isoformat(timespec="milliseconds")
+        fw = asyncio.ensure_future(got_first.wait())
         try:
-            await asyncio.wait_for(asyncio.shield(got_first.wait()), max(0.01, arr + pf - time.monotonic()))
+            # first line OR the request finishing (an exception must not look like a give-up)
+            await asyncio.wait({fw, task}, timeout=max(0.01, arr + pf - time.monotonic()), return_when=asyncio.FIRST_COMPLETED)
+            if not (fw.done() or task.done()):
+                raise asyncio.TimeoutError
             rep = await asyncio.wait_for(asyncio.shield(task), max(0.01, arr + pt - time.monotonic()))
             rows.append(reply_row(rep, name, source, start_iso, grade(q, rep, chunks) if q.gold or not q.answerable else None))
         except asyncio.TimeoutError:
@@ -97,6 +101,13 @@ async def run_scenario(name: str, real: bool, cfg_path="config/relay.yaml"):
             rows.append({"request_id": f"{name}:{i:05d}", "scenario": name, "source": source, "start_time": start_iso,
                          "first_token_ms": None, "total_ms": int((time.monotonic() - arr) * 1000), "status": "timeout",
                          "retries": 0, "tokens_in": 0, "tokens_out": 0, "retrieval_setting": "", "answer_grade": ""})
+        except Exception as e:  # a pipeline bug: record it as an error row instead of losing the request
+            print(f"request {i} raised {type(e).__name__}: {e}")
+            rows.append({"request_id": f"{name}:{i:05d}", "scenario": name, "source": source, "start_time": start_iso,
+                         "first_token_ms": None, "total_ms": int((time.monotonic() - arr) * 1000), "status": "error",
+                         "retries": 0, "tokens_in": 0, "tokens_out": 0, "retrieval_setting": "", "answer_grade": ""})
+        finally:
+            fw.cancel()
 
     async def events():
         for ev in scn.get("events") or []:

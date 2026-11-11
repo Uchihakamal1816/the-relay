@@ -68,7 +68,7 @@ P, F = CFG.models.primary.id, CFG.models.fallback.id
     ({P: 0, F: 0}, {P: 0.2, F: 1}, 20, (Level.LEAN, P)),
     ({P: 9, F: 0}, {P: 1, F: 1}, 20, (Level.FALLBACK, F)),
     ({P: 9, F: 8}, {P: 1, F: 1}, 20, (Level.FALLBACK, F)),
-    ({P: 9, F: 30}, {P: 1, F: 1}, 20, (Level.LEAN, P)),
+    ({P: 4, F: 30}, {P: 1, F: 1}, 6, (Level.LEAN, P)),
     ({P: 30, F: 30}, {P: 1, F: 1}, 20, (Level.EXTRACTIVE, None)),
     ({P: 0, F: 0}, {P: 0.01, F: 0.01}, 20, (Level.EXTRACTIVE, None)),
 ])

@@ -63,3 +63,10 @@ def test_per_paper_quota():
     st = RetrievalSetting("X", 200, 3, False)
     r = asyncio.run(s.search_papers(["the"], ["attention", "moshi", "hnet"], st, question="the", per_paper=True))
     assert {h.chunk.paper for h in r.hits} == {"attention", "moshi", "hnet"}
+
+
+def test_rerank_skipped_when_busy():
+    s, _ = ps()
+    s.rerank_inflight = s.max_rerank
+    r = asyncio.run(s.search_papers(["layers"], None, RetrievalSetting("X", 200, 3, True), question="layers"))
+    assert r.rerank_skipped and not r.timed_out

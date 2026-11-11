@@ -12,13 +12,17 @@ class ToolResult:
     hits: list[Hit]
     timed_out: bool
     ms: float
+    rerank_skipped: bool = False
 
 
 class PaperSearch:
     def __init__(self, corpus_dir: Path = Path("data/corpus"), reranker: Reranker | None = None,
-                 indexes: dict[int, Index] | None = None):
+                 indexes: dict[int, Index] | None = None, max_rerank: int = 4):
         self.indexes = indexes or {s: Index.load(corpus_dir / f"c{s}") for s in SIZES if (corpus_dir / f"c{s}").exists()}
         self.reranker = reranker or Reranker()
+        # Re-ranking is CPU work the provider limits never see. A timed-out re-rank keeps running in its
+        # thread, so under overload they pile up. Cap concurrent re-ranks; beyond the cap, skip re-ranking.
+        self.max_rerank, self.rerank_inflight = max_rerank, 0
 
     def warmup(self) -> None:
         """Load ONNX models once; a cold re-ranker takes seconds and would time out the first requests."""
@@ -42,8 +46,11 @@ class PaperSearch:
         t0 = time.perf_counter()
         k = k or setting.k
         cands = await asyncio.to_thread(self._fuse, queries or [question], papers, setting)
-        timed_out = False
-        if setting.rerank and cands:
+        timed_out = skipped = False
+        if setting.rerank and cands and self.rerank_inflight >= self.max_rerank:
+            skipped = True
+        elif setting.rerank and cands:
+            self.rerank_inflight += 1
             try:
                 scores = await asyncio.wait_for(asyncio.to_thread(
                     self.reranker.score, question, [doc_text(h.chunk) for h in cands]), timeout_s)
@@ -52,6 +59,8 @@ class PaperSearch:
                 cands.sort(key=lambda h: -h.rerank_score)
             except asyncio.TimeoutError:
                 timed_out = True
+            finally:
+                self.rerank_inflight -= 1
         if per_paper:
             ps = list(papers) if papers else sorted({h.chunk.paper for h in cands})
             quota = max(1, k // max(1, len(ps)))
@@ -67,7 +76,7 @@ class PaperSearch:
             hits = out[:max(k, len(ps))]
         else:
             hits = cands[:k]
-        return ToolResult(hits, timed_out, (time.perf_counter() - t0) * 1000)
+        return ToolResult(hits, timed_out, (time.perf_counter() - t0) * 1000, skipped)
 
 
 def cli(argv):

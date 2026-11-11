@@ -18,6 +18,6 @@ def choose_level(wait_s, daily_frac, tokens_full: int, tokens_lean: int, patienc
     cands = [(wait_s(m, tokens_lean), lvl, m) for ok, lvl, m in ((p_ok, Level.LEAN, p), (f_ok, Level.FALLBACK, f)) if ok]
     if cands:
         w, lvl, m = min(cands)
-        if w <= patience_left_s - 1.5:
+        if w <= patience_left_s - 1.5:  # leave ~1.5 s for the model's own first line
             return lvl, m
     return Level.EXTRACTIVE, None

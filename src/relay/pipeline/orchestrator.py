@@ -116,7 +116,7 @@ class Relay:
         for _ in range(2):
             est_full = count_tokens(build_draft_messages(q, hits)[0]["content"]) + cfg.draft.max_completion_tokens
             est_lean = int(est_full * lean.k / max(1, setting.k)) + cfg.draft.lean_max_completion_tokens
-            left = cfg.slo.patience_total_s - tr.now_ms() / 1000
+            left = cfg.slo.patience_first_s - tr.now_ms() / 1000  # people give up before the first line, not at the end
             if force_level is not None and not exclude:
                 level = force_level
                 model = None if level == Level.EXTRACTIVE else (self.F if level == Level.FALLBACK else self.P)
@@ -170,7 +170,7 @@ class Relay:
         with tr.span(f"retrieve:{setting.name}", "work") as sp:
             r = await self.search.search_papers(u.queries or [q], papers, setting, question=q,
                                                 timeout_s=self.cfg.retrieval.tool_timeout_s, per_paper=u.ambiguous and papers is not None, k=k)
-            sp["rerank_timed_out"] = r.timed_out
+            sp["rerank_timed_out"] = r.timed_out; sp["rerank_skipped"] = r.rerank_skipped
         hits = r.hits
         pm_cfg = self.cfg.get("papermap") or {}
         if self.papermap and pm_cfg.get("enabled"):
@@ -343,7 +343,7 @@ def build(cfg, real: bool, limits=None, ledger=None, record_dir=None, warm=True)
         raise SystemExit("GROQ_API_KEY missing in .env")
     client = LLMClient(cfg.endpoints.real if real else cfg.endpoints.standin, key, "real" if real else "stand-in")
     gov = Governor.from_config(cfg, limits=limits, ledger=ledger)
-    ps = PaperSearch()
+    ps = PaperSearch(max_rerank=cfg.retrieval.get("max_concurrent_rerank", 4))
     if warm:
         ps.warmup()
     pm_path = Path("data/corpus/papermap.json")
