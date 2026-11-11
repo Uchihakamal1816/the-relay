@@ -84,7 +84,10 @@ def _replay(st: State, trace: str | None, prompt: str) -> str:
             return json.loads(f.read_text())["content"]
     st.stats["replay_miss"] += 1
     if tags.get("stage") == "understand" or '"in_scope"' in prompt:
-        return json.dumps({"in_scope": True, "papers": ["attention", "moshi", "hnet"], "ambiguous": False, "queries": []})
+        # no recording: answer like a reasonable router would (keyword routing), not a fixed "all papers"
+        from relay.pipeline.understand import heuristic_understand
+        u = heuristic_understand(prompt.rsplit("QUESTION:", 1)[-1].strip())
+        return json.dumps({"in_scope": True, "papers": u.papers, "ambiguous": u.ambiguous, "queries": []})
     ids = re.findall(r"^\[([AMH]\d+)\]", prompt, re.M)
     return f"The passages discuss this topic [{ids[0]}]" if ids else "NOT_IN_PAPERS"
 
