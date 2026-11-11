@@ -26,7 +26,7 @@ class RetryPolicy:
         if sent_any or err.kind in NEVER or attempt >= c.max_attempts:
             return None
         now = self.clock(); self._trim(now)
-        if len(self.retries) + 1 > c.budget_ratio * max(1, len(self.reqs)):
+        if len(self.retries) + 1 > max(c.get("min_per_min", 3), c.budget_ratio * len(self.reqs)):
             return None
         self.retries.append(now)
         if err.kind == "rate_limited_minute":

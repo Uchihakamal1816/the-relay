@@ -1,0 +1,5 @@
+name: steady-twin
+target: stand-in
+seed: 7
+limit_scale: 1
+segments: [{duration_s: 360, rate_x_capacity: 0.6}]

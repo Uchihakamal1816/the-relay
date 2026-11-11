@@ -93,7 +93,7 @@ def test_ledger_rebuild(tmp_path):
     assert g.for_model("openai/gpt-oss-120b").daily_frac_left() == pytest.approx((180000 - 150000) / 180000, abs=0.01)
 
 
-RC = NS(policy="budgeted", max_attempts=2, base_s=0.25, cap_s=2.0, budget_ratio=0.1)
+RC = NS(policy="budgeted", max_attempts=2, base_s=0.25, cap_s=2.0, budget_ratio=0.1, min_per_min=3)
 E = lambda k, ra=None: LLMError(k, rec(), ra)
 
 

@@ -1,0 +1,9 @@
+name: burst
+target: stand-in
+seed: 7
+limit_scale: 10
+segments:
+  - {duration_s: 240, rate_x_capacity: 0.5}
+  - {duration_s: 45, rate_x_capacity: 6.0, dup_fraction: 0.5}
+  - {duration_s: 315, rate_x_capacity: 0.5}
+standin: {faults: {p_500: 0.01, p_slow_success: 0.03}}

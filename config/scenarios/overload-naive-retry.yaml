@@ -1,0 +1,7 @@
+name: overload-naive-retry
+target: stand-in
+seed: 7
+limit_scale: 10
+segments: [{duration_s: 360, rate_x_capacity: 4.0}]
+standin: {faults: {p_500: 0.05, p_slow_success: 0.03}}
+overrides: {"retry.policy": naive}
