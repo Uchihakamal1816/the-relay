@@ -67,7 +67,8 @@ async def run_scenario(name: str, real: bool, cfg_path="config/relay.yaml"):
         await admin(cfg.endpoints.standin, {"reset": True, "patch": {
             "limits": {m: l.__dict__ for m, l in lim.items()}, "faults": {**{"p_500": 0, "p_503": 0, "p_hang": 0, "p_midstream_cut": 0, "p_slow_success": 0},
                                                                          **(scn.get("standin") or {}).get("faults", {})}}})
-    relay = build(cfg, real, limits=None if real else lim, ledger=LEDGER if real else None)
+    relay = build(cfg, real, limits=None if real else lim, ledger=LEDGER if real else None,
+                  record_dir=Path("raw/recordings") if real else None)  # real answers feed the stand-in replay
     source = "real" if real else "stand-in"
     chunks = relay.search.chunks_by_id(cfg.retrieval.settings[cfg.retrieval.default].chunk_tokens)
     rows = []

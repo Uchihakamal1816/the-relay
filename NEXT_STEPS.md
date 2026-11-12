@@ -1,7 +1,7 @@
 # Morning handoff (written overnight, 2026-11-12)
 
 Repo: https://github.com/Uchihakamal1816/the-relay (private). Work is on branch `build`; `main` has only the brief and plan.
-No Groq call has been made. `results.csv` holds only its header.
+Probes and all scenarios have run (real + calibrated stand-in). Tables: `report/tables.md`.
 
 ## Done (all tested, 102 tests pass)
 | Task | State |
@@ -67,3 +67,24 @@ Each row is a fix applied on top of the previous one. Data in `raw/dryrun/`. Goo
 - **Probe budget**: the concurrency probe estimate is 10K tokens, not the plan's 5K.
 - **Paper map**: symbol detection is conservative (2 to 8 symbols per paper); section titles are also term entries (e.g. "inner monologue" → Moshi §3.4.4).
 - Low PDF-coverage pages are references, figures and appendix visualisations, except H-Net p.21 (Table 6 layout) and Moshi p.34; worth a glance.
+
+## Final run (2026-11-12, calibrated stand-in + real steady)
+| Scenario | ok % | rate-limited % | timeout % | first token p50/p95 ms |
+|---|---|---|---|---|
+| steady-real (real) | 100 | 0 | 0 | 1767 / 2567 |
+| steady-twin (stand-in) | 100 | 0 | 0 | 1622 / 2288 |
+| burst / burst-nocache | 99.5 / 91.1 | 0.2 / 3.6 | 0.4 / 5.3 | 1714 / 1904 p50 |
+| overload (4x) | 74.1 | 19.9 | 5.7 | 3771 / 5607 |
+| overload-naive-retry | 73.2 | 22.1 | 4.7 | 3829 / 5599 |
+| minute-halved | 96.1 | 2.8 | 1.1 | 2023 / 4603 |
+| daily-exhausted | 90.8 | 9.2 | 0 | 2298 / 3556 |
+
+- Stand-in vs real: p50 first token 8% fast, tokens/answer 1374 vs 1678 (18% low). Say so in section 2.
+- `capacity.tokens_per_answer_full` set to 1700 from steady-real (scenarios above ran at 1400, so stand-in offered rates are ~20% high vs the new figure).
+- Budgeted vs naive retry under overload: only ~1 pt difference; retries were rare (0.04/request) because the ladder degrades before retrying.
+- Overload p99 (`relay slow --scenario overload --pct 99`): 4.1 s of 5.95 s was waiting in the 120b queue before falling to 20b (`WouldMissDeadline`). Deciding the level before queueing would cut this; same open issue as the quoted fallback.
+- overload had 4 `error` rows (0.3%); check `raw/traces/overload.jsonl` for the exception.
+- Before submitting: redact the Groq org id from 429 bodies in `raw/`.
+
+## Still yours
+Eval questions → `eval validate` / `recall` / real eval (Table 3); review grades; confirm patches; Table 1 prose; write-up, Vaani feedback, assistant-history section; G1 decision.

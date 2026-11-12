@@ -32,5 +32,5 @@ draft: {max_completion_tokens: 400, lean_max_completion_tokens: 250, ttft_timeou
 retry: {policy: budgeted, max_attempts: 2, base_s: 0.25, cap_s: 2.0, budget_ratio: 0.1, min_per_min: 3}
 cache: {enabled: true, ttl_s: 600}
 papermap: {enabled: true, max_hits: 2}
-capacity: {tokens_per_answer_full: 1700}   # replace with the Task 9 measurement
+capacity: {tokens_per_answer_full: 1700}   # measured: real draft call 1,184 tokens (1,136 in + 48 out); refine from steady-real
 seed: 7
