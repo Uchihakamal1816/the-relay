@@ -1,10 +1,188 @@
-# [KAMAL] Write at least 20 questions here (24 recommended). See PLAN.md Task 9 for the mix.
-# Each entry:
-# - id: q01
-#   question: "..."
-#   answerable: true
-#   category: table_number
-#   gold: [{paper: attention, section: "6.1", label: "Table 2"}]
-#   must_include: [["28.4"]]          # every group must match; alternatives inside a group
-#   note: "why a naive system gets this wrong"
-[]
+# --- Attention Is All You Need (arXiv:1706.03762v7) ---
+- id: q01
+  question: How many layers do the Transformer encoder and decoder each have in Attention Is All You Need?
+  answerable: true
+  category: direct_fact
+  gold: [{paper: attention, section: "3.1"}]
+  must_include: [["6"]]
+  note: Basic architecture fact in Attention §3.1 (N=6 for both).
+
+- id: q02
+  question: How many parallel attention heads does the base Transformer use, and what is the dimension of each head?
+  answerable: true
+  category: direct_fact
+  gold: [{paper: attention, section: "3.2.2"}]
+  must_include: [["8"], ["64"]]
+  note: Multi-head attention dimensions in Attention §3.2.2.
+
+- id: q03
+  question: How many warmup steps and what label smoothing value are used to train the base Transformer?
+  answerable: true
+  category: direct_fact
+  gold: [{paper: attention, section: "5.3"}, {paper: attention, section: "5.4"}]
+  must_include: [["4000", "4,000"], ["0.1"]]
+  note: Training schedule and regularization in Attention §5.3 and §5.4.
+
+- id: q04
+  question: What BLEU scores does the big Transformer achieve on English-to-German and English-to-French newstest2014?
+  answerable: true
+  category: table_number
+  gold: [{paper: attention, section: "6.1", label: "Table 2"}]
+  must_include: [["28.4"], ["41.8"]]
+  note: Table 2 numeric lookup in Attention §6.1.
+
+- id: q05
+  question: What WSJ Section 23 F1 score does the 4-layer semi-supervised Transformer achieve on English constituency parsing?
+  answerable: true
+  category: table_number
+  gold: [{paper: attention, section: "6.3", label: "Table 4"}]
+  must_include: [["92.7"]]
+  note: Table 4 parsing score in Attention §6.3.
+
+- id: q06
+  question: What GPU model and training time were used to train the base Transformer in Attention Is All You Need?
+  answerable: true
+  category: direct_fact
+  gold: [{paper: attention, section: "5.2"}]
+  must_include: [["p100"], ["12"]]
+  note: Hardware/schedule detail in Attention §5.2 (8 P100 GPUs, 12 hours).
+
+# --- Moshi (arXiv:2410.00037v1) ---
+- id: q07
+  question: What frame rate and bitrate does the Mimi audio codec operate at?
+  answerable: true
+  category: direct_fact
+  gold: [{paper: moshi, section: "3.3.1"}]
+  must_include: [["12.5"], ["1.1"]]
+  note: Mimi codec rate specs in Moshi §3.3.1.
+
+- id: q08
+  question: How many quantizers and what codebook size does Mimi use?
+  answerable: true
+  category: direct_fact
+  gold: [{paper: moshi, section: "3.3.1"}]
+  must_include: [["8"], ["2048", "2,048"]]
+  note: Mimi RVQ hyperparameters in Moshi §3.3.1.
+
+- id: q09
+  question: How many layers and attention heads does Moshi's Depth Transformer have?
+  answerable: true
+  category: table_number
+  gold: [{paper: moshi, section: "3.2.1", label: "Table 1"}]
+  must_include: [["6"], ["16"]]
+  note: Moshi Table 1 Depth Transformer hyperparameters.
+
+- id: q10
+  question: In Moshi's Inner Monologue, roughly what percentage of aligned text tokens in English conversational speech are padding tokens?
+  answerable: true
+  category: notation_definition
+  gold: [{paper: moshi, section: "3.4.4"}]
+  must_include: [["65"]]
+  note: Inner Monologue padding density in Moshi §3.4.4.
+
+- id: q11
+  question: What 0-shot score does Moshi achieve on LlaMA-Questions compared to Moshi without Inner Monologue?
+  answerable: true
+  category: table_number
+  gold: [{paper: moshi, section: "5.4", label: "Table 8"}]
+  must_include: [["62.3"], ["21.0"]]
+  note: Spoken QA Table 8 comparison in Moshi §5.4.
+
+# --- H-Net / Dynamic Chunking (arXiv:2507.07955v2) ---
+- id: q12
+  question: What window size does Sliding Window Attention use in H-Net encoder and decoder networks?
+  answerable: true
+  category: table_number
+  gold: [{paper: hnet, section: "3", label: "Table 1"}]
+  must_include: [["1024", "1,024"]]
+  note: Table 1 caption detail in H-Net §3.
+
+- id: q13
+  question: At the GPT-3 XL (1.3B) scale, what average accuracy does H-Net (2-stage) achieve compared to the BPE Transformer in Table 2?
+  answerable: true
+  category: table_number
+  gold: [{paper: hnet, section: "3.1", label: "Table 2"}]
+  must_include: [["58.2"], ["55.5"]]
+  note: Table 2 numeric comparison in H-Net §3.1.
+
+- id: q14
+  question: What is the role of the smoothing module in H-Net's dechunking layer?
+  answerable: true
+  category: notation_definition
+  gold: [{paper: hnet, section: "2.2.2"}]
+  must_include: [["continuous", "gradient", "differentiable"]]
+  note: Core concept in H-Net §2.2.2 (makes discrete boundary upsampling differentiable).
+
+- id: q15
+  question: In H-Net Table 5 on HG38, what final perplexity does the 66M H-Net (M3T1 + M15 + M4) reach?
+  answerable: true
+  category: patched_table
+  gold: [{paper: hnet, section: "3.2", label: "Table 5"}]
+  must_include: [["2.697"]]
+  note: Tests the PDF-patched H-Net Table 5 (missing from arXiv HTML).
+
+- id: q16
+  question: In H-Net Table 7, what final perplexity does the M4 + T15 + M4 encoder ablation reach on HG38?
+  answerable: true
+  category: patched_table
+  gold: [{paper: hnet, section: "E.3", label: "Table 7"}]
+  must_include: [["2.722"]]
+  note: Tests the PDF-patched H-Net Table 7 in Appendix E.3.
+
+- id: q17
+  question: When distilling Llama 3.2 3B into a 1-stage byte-level H-Net, what 5-shot MMLU score does the distilled model reach vs. the teacher?
+  answerable: true
+  category: table_number
+  gold: [{paper: hnet, section: "F", label: "Table 8"}]
+  must_include: [["0.519"], ["0.561"]]
+  note: Appendix F Table 8 distillation score in H-Net.
+
+# --- Ambiguous / Multi-paper (no paper named, or cross-paper comparison) ---
+- id: q18
+  question: What is the model dimension and number of layers of the Transformer?
+  answerable: true
+  category: multi_paper_ambiguous
+  gold: [{paper: attention, section: "3.1"}, {paper: moshi, section: "3.2.1", label: "Table 1"}]
+  must_include: [["512"], ["4096", "1024"]]
+  note: Names no paper; tests multi-paper attribution (Attention 512/6 vs. Moshi 4096/32 & 1024/6).
+
+- id: q19
+  question: What batch size in tokens is used during text pre-training of Helium in Moshi vs. the Transformer?
+  answerable: true
+  category: multi_paper_ambiguous
+  gold: [{paper: moshi, section: "3.2.1", label: "Table 1"}, {paper: attention, section: "5.1"}]
+  must_include: [["4.2"], ["25000", "25,000"]]
+  note: "Cross-paper comparison (Moshi Table 1: 4.2M tokens; Attention §5.1: ~25,000 source/target tokens)."
+
+# --- Unanswerable (near-miss & out-of-scope) ---
+- id: q20
+  question: How much did it cost in US dollars to train Moshi?
+  answerable: false
+  category: unanswerable_near
+  gold: []
+  must_include: []
+  note: Near-miss; training schedule/hardware are discussed, dollar cost is not.
+
+- id: q21
+  question: What accuracy does H-Net (2-stage) achieve on the GSM8K math benchmark?
+  answerable: false
+  category: unanswerable_near
+  gold: []
+  must_include: []
+  note: Near-miss; Table 2 lists 7 benchmarks, GSM8K is not among them.
+
+- id: q22
+  question: What BLEU score does the Transformer achieve on Japanese-to-English WMT translation?
+  answerable: false
+  category: unanswerable_near
+  gold: []
+  must_include: []
+  note: Near-miss; Attention Table 2 only covers EN-DE and EN-FR.
+
+- id: q23
+  question: How many parameters does the Llama 4 Maverick model have?
+  answerable: false
+  category: unanswerable_far
+  gold: []
+  must_include: []
+  note: Completely out-of-scope unanswerable question.

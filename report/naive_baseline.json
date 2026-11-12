@@ -1,0 +1,420 @@
+[
+ {
+  "qid": "q01",
+  "hit": true,
+  "top": [
+   [
+    "A7",
+    "[Attention | \u00a73.1 Encoder and Decoder Stacks / Decoder | p.3]"
+   ],
+   [
+    "A6",
+    "[Attention | \u00a73.1 Encoder and Decoder Stacks / Encoder | p.3]"
+   ],
+   [
+    "A14",
+    "[Attention | \u00a73.2.3 Applications of Attention in our Model | p.5]"
+   ],
+   [
+    "H72",
+    "[H-Net | \u00a73.3 Ablation Studies / Encoder & Decoder Layer Selection | Figure 9 | p.19]"
+   ]
+  ]
+ },
+ {
+  "qid": "q02",
+  "hit": true,
+  "top": [
+   [
+    "A13",
+    "[Attention | \u00a73.2.2 Multi-Head Attention | p.5]"
+   ],
+   [
+    "A14",
+    "[Attention | \u00a73.2.3 Applications of Attention in our Model | p.5]"
+   ],
+   [
+    "A34",
+    "[Attention | \u00a76.2 Model Variations | p.8]"
+   ],
+   [
+    "A11",
+    "[Attention | \u00a73.2.2 Multi-Head Attention | Figure 2 | p.4]"
+   ]
+  ]
+ },
+ {
+  "qid": "q03",
+  "hit": true,
+  "top": [
+   [
+    "M38",
+    "[Moshi | \u00a73.4.1 Hierarchical autoregressive modeling with RQ-Transformer / RQ-Transformer]"
+   ],
+   [
+    "M28",
+    "[Moshi | \u00a73.3.1 Architecture / Optimization | p.11]"
+   ],
+   [
+    "A25",
+    "[Attention | \u00a75.3 Optimizer | p.7]"
+   ],
+   [
+    "H45",
+    "[H-Net | \u00a73 Experiments / Experimental Setup | p.12]"
+   ]
+  ]
+ },
+ {
+  "qid": "q04",
+  "hit": true,
+  "top": [
+   [
+    "A30",
+    "[Attention | \u00a76.1 Machine Translation | p.8]"
+   ],
+   [
+    "A29",
+    "[Attention | \u00a76.1 Machine Translation | Table 2 | p.8]"
+   ],
+   [
+    "A1",
+    "[Attention | \u00a70 Abstract | p.1]"
+   ],
+   [
+    "H54",
+    "[H-Net | \u00a73.1 Language Modeling / Downstream Evaluations | p.12]"
+   ]
+  ]
+ },
+ {
+  "qid": "q05",
+  "hit": true,
+  "top": [
+   [
+    "A35",
+    "[Attention | \u00a76.3 English Constituency Parsing | Table 4 | p.10]"
+   ],
+   [
+    "A36",
+    "[Attention | \u00a76.3 English Constituency Parsing | p.9]"
+   ],
+   [
+    "A1",
+    "[Attention | \u00a70 Abstract | p.1]"
+   ],
+   [
+    "H1",
+    "[H-Net | \u00a70 Abstract | p.1]"
+   ]
+  ]
+ },
+ {
+  "qid": "q06",
+  "hit": true,
+  "top": [
+   [
+    "A24",
+    "[Attention | \u00a75.2 Hardware and Schedule | p.7]"
+   ],
+   [
+    "A34",
+    "[Attention | \u00a76.2 Model Variations | p.8]"
+   ],
+   [
+    "A37",
+    "[Attention | \u00a77 Conclusion | p.10]"
+   ],
+   [
+    "A3",
+    "[Attention | \u00a72 Background | p.2]"
+   ]
+  ]
+ },
+ {
+  "qid": "q07",
+  "hit": true,
+  "top": [
+   [
+    "M68",
+    "[Moshi | \u00a75.1 Text Language Modeling / Results | Table 4 | p.23]"
+   ],
+   [
+    "M73",
+    "[Moshi | \u00a75.2 Audio Tokenization / Discussion | p.24]"
+   ],
+   [
+    "M27",
+    "[Moshi | \u00a73.3.1 Architecture / Causality and streaming | p.10]"
+   ],
+   [
+    "M40",
+    "[Moshi | \u00a73.4.2 Audio modeling | p.14]"
+   ]
+  ]
+ },
+ {
+  "qid": "q08",
+  "hit": true,
+  "top": [
+   [
+    "M40",
+    "[Moshi | \u00a73.4.2 Audio modeling | p.14]"
+   ],
+   [
+    "M29",
+    "[Moshi | \u00a73.3.1 Architecture / Quantization rate | p.11]"
+   ],
+   [
+    "M127",
+    "[Moshi | \u00a77 Conclusion | Table 17 | p.53]"
+   ],
+   [
+    "M23",
+    "[Moshi | \u00a73.3 Audio Tokenization | Figure 2 | p.10]"
+   ]
+  ]
+ },
+ {
+  "qid": "q09",
+  "hit": true,
+  "top": [
+   [
+    "M39",
+    "[Moshi | \u00a73.4.1 Hierarchical autoregressive modeling with RQ-Transformer / RQ-Transformer | p.14]"
+   ],
+   [
+    "M58",
+    "[Moshi | \u00a74.4 Training stages and hyper-parameters / Moshi pre-training | p.20]"
+   ],
+   [
+    "A13",
+    "[Attention | \u00a73.2.2 Multi-Head Attention | p.5]"
+   ],
+   [
+    "M17",
+    "[Moshi | \u00a73.2.1 Architecture | Table 1 | p.8]"
+   ]
+  ]
+ },
+ {
+  "qid": "q10",
+  "hit": true,
+  "top": [
+   [
+    "M46",
+    "[Moshi | \u00a73.4.4 Inner Monologue / Aligning text and audio tokens | p.16]"
+   ],
+   [
+    "M45",
+    "[Moshi | \u00a73.4.4 Inner Monologue | p.15]"
+   ],
+   [
+    "M47",
+    "[Moshi | \u00a73.4.4 Inner Monologue / Aligning text and audio tokens | p.16]"
+   ],
+   [
+    "M89",
+    "[Moshi | \u00a75.5 Spoken question answering / Results | p.29]"
+   ]
+  ]
+ },
+ {
+  "qid": "q11",
+  "hit": true,
+  "top": [
+   [
+    "M90",
+    "[Moshi | \u00a75.5 Spoken question answering / Discussion | p.30]"
+   ],
+   [
+    "M87",
+    "[Moshi | \u00a75.5 Spoken question answering / Metrics | p.29]"
+   ],
+   [
+    "M86",
+    "[Moshi | \u00a75.4 Audio language modeling / Discussion | Table 8 | p.29]"
+   ],
+   [
+    "M89",
+    "[Moshi | \u00a75.5 Spoken question answering / Results | p.29]"
+   ]
+  ]
+ },
+ {
+  "qid": "q12",
+  "hit": true,
+  "top": [
+   [
+    "H15",
+    "[H-Net | \u00a72.1.2 Design Principles / Encoder and Decoder Networks | p.5]"
+   ],
+   [
+    "H118",
+    "[H-Net | \u00a7E.1 Different Downsampling Methods in the Chunking Layer | p.36]"
+   ],
+   [
+    "A7",
+    "[Attention | \u00a73.1 Encoder and Decoder Stacks / Decoder | p.3]"
+   ],
+   [
+    "H39",
+    "[H-Net | \u00a73 Experiments | Table 1 | p.11]"
+   ]
+  ]
+ },
+ {
+  "qid": "q13",
+  "hit": true,
+  "top": [
+   [
+    "H54",
+    "[H-Net | \u00a73.1 Language Modeling / Downstream Evaluations | p.12]"
+   ],
+   [
+    "H49",
+    "[H-Net | \u00a73.1 Language Modeling / XL Scale | Figure 3 | p.13]"
+   ],
+   [
+    "H58",
+    "[H-Net | \u00a73.2 Alternate Language Datasets | Figure 5 | p.16]"
+   ],
+   [
+    "H62",
+    "[H-Net | \u00a73.2 Alternate Language Datasets / Experimental setup for Chinese and code | Table 4 | p.17]"
+   ]
+  ]
+ },
+ {
+  "qid": "q14",
+  "hit": true,
+  "top": [
+   [
+    "H23",
+    "[H-Net | \u00a72.2.2 Dechunking / Smoothing Module | p.6]"
+   ],
+   [
+    "H25",
+    "[H-Net | \u00a72.2.2 Dechunking / Smoothing Module | p.7]"
+   ],
+   [
+    "H22",
+    "[H-Net | \u00a72.2.2 Dechunking | p.6]"
+   ],
+   [
+    "H13",
+    "[H-Net | \u00a72.1.1 Components of H-Net | p.5]"
+   ]
+  ]
+ },
+ {
+  "qid": "q15",
+  "hit": true,
+  "top": [
+   [
+    "H87",
+    "[H-Net | \u00a74 Discussion / Scale | p.23]"
+   ],
+   [
+    "H17",
+    "[H-Net | \u00a72.1.2 Design Principles / Architectural Guidelines | p.5]"
+   ],
+   [
+    "H63",
+    "[H-Net | \u00a73.2 Alternate Language Datasets / Experimental setup for Chinese and code | Table 5 | p.17]"
+   ],
+   [
+    "H12",
+    "[H-Net | \u00a72.1.1 Components of H-Net | p.4]"
+   ]
+  ]
+ },
+ {
+  "qid": "q16",
+  "hit": true,
+  "top": [
+   [
+    "H121",
+    "[H-Net | \u00a7E.3 DNA Architecture Ablations | Table 7 | p.37]"
+   ],
+   [
+    "H122",
+    "[H-Net | \u00a7E.3 DNA Architecture Ablations | Table 7 | p.37]"
+   ],
+   [
+    "H120",
+    "[H-Net | \u00a7E.3 DNA Architecture Ablations | p.37]"
+   ],
+   [
+    "H68",
+    "[H-Net | \u00a73.2 Alternate Language Datasets / DNA (Human Genome) | Figure 8 | p.18]"
+   ]
+  ]
+ },
+ {
+  "qid": "q17",
+  "hit": true,
+  "top": [
+   [
+    "H124",
+    "[H-Net | \u00a7F Distilling Token-Level Models to Byte-Level | Table 8 | p.38]"
+   ],
+   [
+    "H129",
+    "[H-Net | \u00a7F Distilling Token-Level Models to Byte-Level / Results | p.39]"
+   ],
+   [
+    "H80",
+    "[H-Net | \u00a74 Discussion / Distillation | p.22]"
+   ],
+   [
+    "H125",
+    "[H-Net | \u00a7F Distilling Token-Level Models to Byte-Level | p.37]"
+   ]
+  ]
+ },
+ {
+  "qid": "q18",
+  "hit": false,
+  "top": [
+   [
+    "A4",
+    "[Attention | \u00a73 Model Architecture | Figure 1 | p.3]"
+   ],
+   [
+    "A34",
+    "[Attention | \u00a76.2 Model Variations | p.8]"
+   ],
+   [
+    "M39",
+    "[Moshi | \u00a73.4.1 Hierarchical autoregressive modeling with RQ-Transformer / RQ-Transformer | p.14]"
+   ],
+   [
+    "H43",
+    "[H-Net | \u00a73 Experiments / Models | p.11]"
+   ]
+  ]
+ },
+ {
+  "qid": "q19",
+  "hit": true,
+  "top": [
+   [
+    "M58",
+    "[Moshi | \u00a74.4 Training stages and hyper-parameters / Moshi pre-training | p.20]"
+   ],
+   [
+    "M65",
+    "[Moshi | \u00a75.1 Text Language Modeling / Baselines | p.22]"
+   ],
+   [
+    "M17",
+    "[Moshi | \u00a73.2.1 Architecture | Table 1 | p.8]"
+   ],
+   [
+    "M66",
+    "[Moshi | \u00a75.1 Text Language Modeling / Results | p.22]"
+   ]
+  ]
+ }
+]

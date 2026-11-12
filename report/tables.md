@@ -30,7 +30,13 @@ error % by row: steady-real=0.0, steady-twin=0.0, steady=0.0, burst=0.0, burst-n
 
 ## Table 3: Retrieval settings
 
-_no rows yet_
+| Setting | Questions asked | Correct and cited % | Wrong % | Correctly refused % | Tokens per answer | First token p50 / p95 (ms) | Total time p50 / p95 (ms) |
+|---|---|---|---|---|---|---|---|
+| S3:c200-k4-rr | 23 | 43.5 | 26.1 | 17.4 | 1333 | 1679 / 3879 (n=23) | 1682 / 3947 (n=23) |
+| S4:c200-k2-rr@20b | 23 | 39.1 | 21.7 | 17.4 | 948 | 996 / 2095 (n=23) | 996 / 2095 (n=23) |
+| S4:c200-k2-rr | 23 | 26.1 | 0.0 | 17.4 | 1262 | 1667 / 2653 (n=23) | 1667 / 2653 (n=23) |
+
+wrongly refused % by row: S3:c200-k4-rr=13.0, S4:c200-k2-rr@20b=21.7, S4:c200-k2-rr=56.5
 
 Definitions: percentiles are pandas linear quantiles over status=ok rows (n shown). Tokens per answer = all tokens of all rows / ok rows. Cost uses list prices per row's model (upper bound: cached input is billed at half). Peak queue = most requests in the system at once.
 

@@ -36,15 +36,17 @@ async def run(setting_name: str, model: str, real: bool, limit: int | None):
     scenario = f"eval-{setting_name}" + ("@20b" if model == "fallback" else "")
     source = "real" if real else "stand-in"
     w = ResultsWriter()
-    done = {r["request_id"] for r in w.read() if r["scenario"] == scenario and r["source"] == source}
+    done = {r["request_id"] for r in w.read() if r["scenario"] == scenario and r["source"] == source and r["status"] != "rate_limited"}
     relay = build(cfg, real, ledger=LEDGER if real else None, record_dir=Path("raw/recordings") if real else None)
     chunks = relay.search.chunks_by_id(setting.chunk_tokens)
-    rows = [r for r in w.read() if r["scenario"] == scenario]
+    rows = [r for r in w.read() if r["scenario"] == scenario and r["status"] != "rate_limited"]
+    gap = 60 * cfg.capacity.tokens_per_answer_full / cfg.limits_prior.tpm if real else 0  # stay under TPM: eval is not a load test
     review = Path("eval/grades_review.csv")
     for q in qs:
         rid = f"{scenario}:{source}:{q.id}"
         if rid in done:
             continue
+        await asyncio.sleep(gap)
         start = datetime.now(timezone.utc).isoformat(timespec="milliseconds")
         rep = await relay.ask(q.question, request_id=rid, setting=setting,
                               force_level=Level.FALLBACK if model == "fallback" else Level.FULL,

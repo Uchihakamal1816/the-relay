@@ -88,3 +88,14 @@ Each row is a fix applied on top of the previous one. Data in `raw/dryrun/`. Goo
 
 ## Still yours
 Eval questions → `eval validate` / `recall` / real eval (Table 3); review grades; confirm patches; Table 1 prose; write-up, Vaani feedback, assistant-history section; G1 decision.
+
+## Eval (2026-11-12, real, 23 questions, auto grades; review `eval/grades_review.csv`)
+| Setting | correct % | wrong % | refused right % | refused wrongly % | tokens/answer | first token p50 |
+|---|---|---|---|---|---|---|
+| S3 c200 k4 rr, 120b | 43.5 | 26.1 | 17.4 | 13.0 | 1333 | 1679 |
+| S4 c200 k2 rr, 20b | 39.1 | 21.7 | 17.4 | 21.7 | 948 | 996 |
+| S4 c200 k2 rr, 120b | 26.1 | 0.0 | 17.4 | 56.5 | 1262 | 1667 |
+- 120b at k=2 refuses instead of guessing (0% wrong, 56% wrongly refused); 20b guesses. Auto "wrong" is likely partly grader strictness (must_include matching); check those rows first.
+- Recall is 1.0 at k≥6 but S1/S2 are not run (quota: ~60K 120b tokens left; each run ~31K). Run tomorrow: `uv run relay eval run --setting S1 --real` then S2.
+- Eval runner now paces to TPM (first unpaced run hit 429s) and re-asks rate-limited rows.
+- Re-ranker top score does not separate unanswerable questions; `refuse_below` stays null.
