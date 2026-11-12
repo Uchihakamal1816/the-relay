@@ -35,8 +35,10 @@ error % by row: steady-real=0.0, steady-twin=0.0, steady=0.0, burst=0.0, burst-n
 | S3:c200-k4-rr | 23 | 43.5 | 26.1 | 17.4 | 1333 | 1679 / 3879 (n=23) | 1682 / 3947 (n=23) |
 | S4:c200-k2-rr@20b | 23 | 39.1 | 21.7 | 17.4 | 948 | 996 / 2095 (n=23) | 996 / 2095 (n=23) |
 | S4:c200-k2-rr | 23 | 26.1 | 0.0 | 17.4 | 1262 | 1667 / 2653 (n=23) | 1667 / 2653 (n=23) |
+| S2:c200-k6-norr | 23 | 52.2 | 13.0 | 17.4 | 2066 | 1460 / 2320 (n=23) | 1460 / 2330 (n=23) |
+| S1:c400-k6-norr | 12 | 16.7 | 50.0 | 0.0 | 1331 | 1008 / 1992 (n=12) | 1032 / 1992 (n=12) |
 
-wrongly refused % by row: S3:c200-k4-rr=13.0, S4:c200-k2-rr@20b=21.7, S4:c200-k2-rr=56.5
+wrongly refused % by row: S3:c200-k4-rr=13.0, S4:c200-k2-rr@20b=21.7, S4:c200-k2-rr=56.5, S2:c200-k6-norr=17.4, S1:c400-k6-norr=33.3
 
 Definitions: percentiles are pandas linear quantiles over status=ok rows (n shown). Tokens per answer = all tokens of all rows / ok rows. Cost uses list prices per row's model (upper bound: cached input is billed at half). Peak queue = most requests in the system at once.
 
