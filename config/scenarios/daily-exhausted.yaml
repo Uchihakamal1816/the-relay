@@ -1,0 +1,7 @@
+name: daily-exhausted
+target: stand-in
+seed: 7
+limit_scale: 10
+segments: [{duration_s: 480, rate_x_capacity: 0.8}]
+daily_after_s: {primary: 180, fallback: 360}   # stand-in TPD sized so each model's day runs out near these times
+standin: {faults: {p_500: 0.01}}

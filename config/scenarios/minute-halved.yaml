@@ -1,0 +1,7 @@
+name: minute-halved
+target: stand-in
+seed: 7
+limit_scale: 10
+segments: [{duration_s: 600, rate_x_capacity: 0.8}]
+events: [{at_s: 240, scale_limits: {rpm: 0.5, tpm: 0.5}}]
+standin: {faults: {p_500: 0.01}}

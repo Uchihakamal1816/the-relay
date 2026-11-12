@@ -1,0 +1,48 @@
+{
+ "latency": {
+  "openai/gpt-oss-120b": {
+   "ttft_base_ms": 435.2387251829537,
+   "ttft_per_1k_prompt_ms": 84.44275862434208,
+   "ttft_sigma": 0.26326124480530516,
+   "tps_mu": 6.0947319216868525,
+   "tps_sigma": 0.1638477668076508,
+   "p_slow": 0.0,
+   "slow_factor": 1.0,
+   "reasoning_tokens_mu": 18.274509803921568,
+   "n": 51
+  },
+  "openai/gpt-oss-20b": {
+   "ttft_base_ms": 593.7050231031058,
+   "ttft_per_1k_prompt_ms": 0.0,
+   "ttft_sigma": 0.2704528457972498,
+   "tps_mu": 6.624174002781141,
+   "tps_sigma": 0.5776846895066199,
+   "p_slow": 0.0,
+   "slow_factor": 1.0,
+   "reasoning_tokens_mu": 7.21875,
+   "n": 32
+  },
+  "qwen/qwen3.8-27b": {
+   "ttft_base_ms": 196.18003195806358,
+   "ttft_per_1k_prompt_ms": 301.15167987786316,
+   "ttft_sigma": 0.24158653405283897,
+   "tps_mu": 5.213020807568352,
+   "tps_sigma": 1.5740041981817372,
+   "p_slow": 0.12121212121212122,
+   "slow_factor": 5.113402569511251,
+   "reasoning_tokens_mu": 1.0,
+   "n": 33
+  }
+ },
+ "load": {
+  "c0": 1,
+  "alpha": 0.17787249729262694
+ },
+ "error_429": {
+  "error": {
+   "message": "__MSG__",
+   "type": "tokens",
+   "code": "rate_limit_exceeded"
+  }
+ }
+}
