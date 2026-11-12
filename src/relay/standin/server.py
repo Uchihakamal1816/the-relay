@@ -131,7 +131,7 @@ def create_app(cfg: dict | None = None) -> FastAPI:
         st.stats["requests"] += 1
         prompt = "\n".join(x.get("content") or "" for x in body["messages"])
         ptok = count_tokens(prompt)
-        reserve = ptok + int(body.get("max_completion_tokens") or 1024)
+        reserve = ptok  # measured: Groq admits on input tokens ("Requested" = prompt); output is charged afterwards
         now = time.monotonic()
         for k, amt in (("rpm", 1), ("rpd", 1), ("tpm", reserve), ("tpd", reserve)):
             at = mod.b[k].available_at(amt, now)
@@ -200,7 +200,7 @@ def create_app(cfg: dict | None = None) -> FastAPI:
                 yield "data: [DONE]\n\n"
                 st.stats["ok"] += 1
                 n = time.monotonic()
-                mod.b["tpm"].refund(reserve - (ptok + ctok + rtok), n); mod.b["tpd"].refund(reserve - (ptok + ctok + rtok), n)
+                mod.b["tpm"].take(ctok + rtok, n); mod.b["tpd"].take(ctok + rtok, n)
             finally:
                 mod.in_flight -= 1
 

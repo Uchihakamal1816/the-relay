@@ -114,7 +114,7 @@ class _Walker:
     def node(self, c: Tag, num, title):
         cls = _cls(c)
         if c.name == "section":
-            self.section(c); return
+            self.section(c, (num, title)); return
         if c.name == "figure":
             (self.table if "ltx_table" in cls else self.figure)(c, num, title); return
         if c.name == "table" and any(x.startswith("ltx_equation") for x in cls):
@@ -133,8 +133,11 @@ class _Walker:
         else:
             self.add(num, title, "text", c.get_text(" "))
 
-    def section(self, sec: Tag):
+    def section(self, sec: Tag, parent: tuple | None = None):
         num, title = _heading(sec)
+        if not num and parent and parent[0]:  # paragraph headings ("Encoder:") inherit the numbered parent
+            num = parent[0]
+            title = f"{parent[1]} / {title.rstrip(':.')}" if title else parent[1]
         self.last = (num, title)
         for c in sec.children:
             if isinstance(c, Tag):

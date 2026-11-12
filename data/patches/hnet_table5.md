@@ -1,4 +1,4 @@
-verified: false
+verified: true  # checked by the assistant against the rendered PDF (p.17 / p.37), 2026-11-12; Kamal to confirm
 Model / Architecture | Params. | Final ppl. ↓
 Transformer (T9) | 29M | 2.769
 Mamba-2 (M10) | 33M | 2.757

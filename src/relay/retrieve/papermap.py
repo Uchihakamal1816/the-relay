@@ -51,7 +51,7 @@ class PaperMap:
                 if re.fullmatch(r"[a-f]", key):
                     key = f"appendix {key}"
                 add(MapEntry(b.paper, "section", key, f"§{b.section_num} {b.section_title}".strip(), b.section_num, b.text[:120]))
-                t = b.section_title.lower().strip().rstrip(".")
+                t = b.section_title.split(" / ")[-1].lower().strip().rstrip(".:")
                 if 2 <= len(t.split()) <= 5 and t not in GENERIC:  # section titles name the paper's own concepts
                     add(MapEntry(b.paper, "term", t, b.section_title, b.section_num, b.text[:120]))
             if b.kind in ("table", "figure_caption") and b.label:

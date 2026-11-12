@@ -37,7 +37,7 @@ def test_rpm_refusal():
 
 
 def test_tpm_refusal():
-    cl, _ = client({"limits": {"*": {"tpm": 100}}})
+    cl, _ = client({"limits": {"*": {"tpm": 3}}})  # admission is on input tokens only
     e = call(cl, mct=500)[0]
     assert isinstance(e, LLMError) and "(TPM)" in e.record.error_body
 

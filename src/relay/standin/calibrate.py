@@ -45,7 +45,8 @@ def fit_profile(probe_dir: Path = Path("raw/probe")) -> dict:
         ttft = (first - rec["t_send"]) * 1000
         gen_s = max(1e-3, rec["t_done"] - first)
         rt = (u.get("completion_tokens_details") or {}).get("reasoning_tokens") or 0
-        by_model.setdefault(r["model"], []).append((u.get("prompt_tokens", 0), ttft, max(1, u.get("completion_tokens", 1)) / gen_s, rt))
+        if r.get("in_flight", 1) == 1:  # baseline from unloaded calls only; load slope is fitted separately
+            by_model.setdefault(r["model"], []).append((u.get("prompt_tokens", 0), ttft, max(1, u.get("completion_tokens", 1)) / gen_s, rt))
         if r.get("in_flight"):
             load_pts.append((r["in_flight"], ttft))
     lat = {}

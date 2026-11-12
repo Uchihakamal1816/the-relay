@@ -42,3 +42,9 @@ def test_coverage_and_page_map():
     assert tgt[0].page == 2
     cov = coverage_by_page(pages, " ".join(x.text for x in b))
     assert cov[0] < 0.1
+
+
+def test_paragraph_heading_inherits_number():
+    b, _ = parse_paper(HTML, "attention")
+    x = [x for x in b if x.text == "Paragraph body."][0]
+    assert x.section_num == "1.1" and x.section_title == "Results / Encoder"
